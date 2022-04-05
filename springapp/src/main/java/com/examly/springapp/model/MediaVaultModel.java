@@ -8,9 +8,9 @@ import org.springframework.stereotype.Component;
 public class MediaVaultModel {
     private String vaultId;
     private String mediaName;
-    private Blob image;
-    private Blob video;
-    private Blob audio;
+    private byte[] image;
+    private byte[] video;
+    private byte[] audio;
     private UserModel userId; 
     private String email;
 
@@ -38,22 +38,22 @@ public class MediaVaultModel {
     public void setMediaName(String mediaName) {
         this.mediaName = mediaName;
     }
-    public Blob getImage() {
+    public byte[]  getImage() {
         return image;
     }
-    public void setImage(Blob image) {
+    public void setImage(byte[]  image) {
         this.image = image;
     }
-    public Blob getVideo() {
+    public byte[]  getVideo() {
         return video;
     }
-    public void setVideo(Blob video) {
+    public void setVideo(byte[]  video) {
         this.video = video;
     }
-    public Blob getAudio() {
+    public byte[]  getAudio() {
         return audio;
     }
-    public void setAudio(Blob audio) {
+    public void  setAudio(byte[]  audio) {
         this.audio = audio;
     }
 }

@@ -6,13 +6,15 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import com.examly.springapp.entity.User;
 import java.sql.Blob;
-
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 
 @Entity
 @Table(name = "media")
 public class Media {
     @Id
-        private String vaultId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+        private int mediaVaultId;
         private String mediaName;
         private Blob image;
         private Blob video;
@@ -27,11 +29,11 @@ public class Media {
         public void setUser(User user) {
             this.user = user;
         }
-        public String getVaultId() {
-            return vaultId;
+        public int getVaultId() {     
+            return mediaVaultId;
         }
-        public void setVaultId(String vaultId) {
-            this.vaultId = vaultId;
+        public void setVaultId(int mediaVaultId) {
+            this.mediaVaultId = mediaVaultId;
         }
         public String getMediaName() {
             return mediaName;

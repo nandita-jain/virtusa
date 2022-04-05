@@ -6,7 +6,7 @@ public class BankVaultModel {
     private String vaultId;
     private Long accountNumber;
     private String accountName;
-    private String IFSC;
+    private String ifsc;
     private String userName;
     private String password;
     private UserModel userId;
@@ -37,10 +37,10 @@ public class BankVaultModel {
         this.accountName = accountName;
     }
     public String getIFSC() {
-        return IFSC;
+        return ifsc;
     }
-    public void setIFSC(String iFSC) {
-        IFSC = iFSC;
+    public void setIFSC(String ifsc) {
+        this.ifsc = ifsc;
     }
     public String getUserName() {
         return userName;
