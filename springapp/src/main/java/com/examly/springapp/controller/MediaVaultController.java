@@ -19,4 +19,9 @@ public class MediaVaultController {
 	public List<MediaVaultModel> getMediaInfo(@RequestParam("email")  String email){
         return mediaVaultService.getMediaInfo(email);
     }
+
+    @RequestMapping(value="/mediaInfoById", method = RequestMethod.GET)	
+	public MediaVaultModel mediaInfoById(@RequestParam("id")  String id){
+        return mediaVaultService.mediaInfoById(id);
+    }
 }

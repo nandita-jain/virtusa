@@ -10,4 +10,6 @@ import com.examly.springapp.entity.Media;
 
 public interface MediaVaultRepository extends JpaRepository<Media, String> {
 	List<Media> findByUser_Email(String email);
+	Optional<Media> findById(String vaultId);
 }
+
