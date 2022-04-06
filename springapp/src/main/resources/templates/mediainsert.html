@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    </head>        
+    <body>
+        <form th:action="@{/user}" th:object="${user}" method="post" enctype="multipart/form-data">
+            <label>Select</label>
+            <input type="file" name="image" accept="image/png, image/jpeg"/><br>
+            <label>Image Name</label>
+            <input type="text" name="imagename"/><br>
+            <input type="submit" value="submit"/>
+        </form>
+    </body>
+</html>

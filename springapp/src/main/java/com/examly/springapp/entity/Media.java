@@ -1,9 +1,11 @@
 package com.examly.springapp.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Lob;
 import com.examly.springapp.entity.User;
 import java.sql.Blob;
 import javax.persistence.GeneratedValue;
@@ -16,9 +18,15 @@ public class Media {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
         private int mediaVaultId;
         private String mediaName;
-        private Blob image;
-        private Blob video;
-        private Blob audio;
+        @Lob
+        @Column(columnDefinition = "MEDIUMBLOB")
+        private String image;
+        @Lob
+        @Column(columnDefinition = "MEDIUMBLOB")
+        private String video;
+        @Lob
+        @Column(columnDefinition = "MEDIUMBLOB")
+        private String audio;
         @ManyToOne
         private User user;
     
@@ -41,22 +49,22 @@ public class Media {
         public void setMediaName(String mediaName) {
             this.mediaName = mediaName;
         }
-        public Blob getImage() {
+        public String getImage() {
             return image;
         }
-        public void setImage(Blob image) {
+        public void setImage(String image) {
             this.image = image;
         }
-        public Blob getVideo() {
+        public String getVideo() {
             return video;
         }
-        public void setVideo(Blob video) {
+        public void setVideo(String video) {
             this.video = video;
         }
-        public Blob getAudio() {
+        public String getAudio() {
             return audio;
         }
-        public void setAudio(Blob audio) {
+        public void setAudio(String audio) {
             this.audio = audio;
         }
     }

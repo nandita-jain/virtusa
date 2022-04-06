@@ -30,19 +30,23 @@ public class MediaVaultController {
     }
 
     @RequestMapping(value="/mediaInfoSave", method = RequestMethod.POST)	
-	public Boolean mediaInfoSave(@RequestBody MediaVaultModel data)throws SQLException, IOException{
+	public Boolean mediaInfoSave(@RequestParam("mediaName") String mediaName,@RequestParam("email") String email,@RequestParam("audio") MultipartFile audio,@RequestParam("image") MultipartFile image,@RequestParam("video") MultipartFile video)throws SQLException, IOException{
                 // if(data != null)
                 // {
                 //     byte[] bytes = file.getBytes();
                 //     data.setImage(bytes);
                 // }
-                return mediaVaultService.mediaInfoSave(data);
+                return mediaVaultService.mediaInfoSave(mediaName,email,image,audio,video);
+    }
+    @RequestMapping("/mediapage")
+    public String mediaPage(){
+        return "mediainsert.html";
     }
 
     @RequestMapping(value="/mediaInfoEditSave", method = RequestMethod.PUT)	
-	public Boolean mediaInfoEditSave(@RequestBody MediaVaultModel data)throws SQLException{
+	public Boolean mediaInfoEditSave(@RequestParam("mediaName") String mediaName,@RequestParam("email") String email,@RequestParam("audio") MultipartFile audio,@RequestParam("image") MultipartFile image,@RequestParam("video") MultipartFile video,@RequestParam("vaultId") String vaultId)throws SQLException, IOException{
         
-        return mediaVaultService.mediaInfoEditSave(data);
+        return mediaVaultService.mediaInfoEditSave(mediaName,email,image,audio,video,vaultId);
     }
 
     @RequestMapping(value="/mediaInfoDelete", method = RequestMethod.DELETE)	

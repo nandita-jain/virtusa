@@ -1,11 +1,14 @@
 package com.examly.springapp.service;
 
 
+import java.io.IOException;
 import java.sql.Blob;
 import java.util.*;
 import java.sql.SQLException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.examly.springapp.model.MediaVaultModel;
 import com.examly.springapp.entity.Media;
 import com.examly.springapp.entity.User;
@@ -38,10 +41,11 @@ public class MediaVaultService {
             MediaVaultModel vaultModel = new MediaVaultModel();
             vaultModel.setVaultId(((Integer)media.getVaultId()).toString());
             vaultModel.setMediaName(media.getMediaName());
-            vaultModel.setImage(blobToByte(media.getImage()));
-            vaultModel.setAudio(blobToByte(media.getAudio()));
-            vaultModel.setVideo(blobToByte(media.getVideo()));
+            vaultModel.setImage(media.getImage());
+            vaultModel.setAudio(media.getAudio());
+            vaultModel.setVideo(media.getVideo());
             vaultModel.setEmail(media.getUser().getEmail());
+            //System.out.println(vaultModel.toString());
             return vaultModel;
         }else{
             return null;
@@ -57,23 +61,23 @@ public class MediaVaultService {
             MediaVaultModel vaultModel = new MediaVaultModel();
             vaultModel.setVaultId(((Integer)media.getVaultId()).toString());
             vaultModel.setMediaName(media.getMediaName());
-            vaultModel.setImage(blobToByte(media.getImage()));
-            vaultModel.setAudio(blobToByte(media.getAudio()));
-            vaultModel.setVideo(blobToByte(media.getVideo()));
+            vaultModel.setImage(media.getImage());
+            vaultModel.setAudio(media.getAudio());
+            vaultModel.setVideo(media.getVideo());
             vaultModel.setEmail(media.getUser().getEmail());
             mediaVaultModelList.add(vaultModel);
         }
         return mediaVaultModelList;
     }
 //.............................................................
-public Boolean mediaInfoSave(MediaVaultModel mediaModel) throws SQLException{
+public Boolean mediaInfoSave(String mediaName,String email,MultipartFile image,MultipartFile audio,MultipartFile video) throws IOException{
         
     Media media = new Media();
-    User userModel=loginRepository.findByEmail(mediaModel.getEmail().trim());
-    media.setMediaName(mediaModel.getMediaName());
-    media.setImage(byteToBlob(mediaModel.getImage()));
-    media.setVideo(byteToBlob(mediaModel.getVideo()));
-    media.setAudio(byteToBlob(mediaModel.getAudio()));
+    User userModel=loginRepository.findByEmail(email.trim());
+    media.setMediaName(mediaName);
+    media.setImage(Base64.getEncoder().encodeToString(image.getBytes()));
+    media.setVideo(Base64.getEncoder().encodeToString(video.getBytes()));
+    media.setAudio(Base64.getEncoder().encodeToString(audio.getBytes()));
     media.setUser(userModel);
     mediaVaultRepository.save(media);
     
@@ -81,19 +85,19 @@ public Boolean mediaInfoSave(MediaVaultModel mediaModel) throws SQLException{
     return true;
 }
 //......................................................................
-public Boolean mediaInfoEditSave(MediaVaultModel mediaModel) throws SQLException{
+public Boolean mediaInfoEditSave(String mediaName,String email,MultipartFile image,MultipartFile audio,MultipartFile video,String vaultId) throws IOException{
             
-    Optional<Media> mediaList =  mediaVaultRepository.findById(Integer.parseInt(mediaModel.getVaultId()));
+    Optional<Media> mediaList =  mediaVaultRepository.findById(Integer.parseInt(vaultId));
     if(mediaList.isPresent())
     {
-        Media media = mediaList.get();
-        User userModel=loginRepository.findByEmail(mediaModel.getEmail().trim()); 
-        media.setMediaName(mediaModel.getMediaName());
-        media.setImage(byteToBlob(mediaModel.getImage()));
-        media.setVideo(byteToBlob(mediaModel.getVideo()));
-        media.setAudio(byteToBlob(mediaModel.getAudio()));
-        media.setUser(userModel);
-        mediaVaultRepository.save(media);
+        Media media = new Media();
+    User userModel=loginRepository.findByEmail(email.trim());
+    media.setMediaName(mediaName);
+    media.setImage(Base64.getEncoder().encodeToString(image.getBytes()));
+    media.setVideo(Base64.getEncoder().encodeToString(video.getBytes()));
+    media.setAudio(Base64.getEncoder().encodeToString(audio.getBytes()));
+    media.setUser(userModel);
+    mediaVaultRepository.save(media);
     }
     
     
@@ -103,22 +107,6 @@ public Boolean mediaInfoEditSave(MediaVaultModel mediaModel) throws SQLException
 public Boolean mediaInfoDelete(String id){
             mediaVaultRepository.deleteById(Integer.parseInt(id));
             return true;
-}
-private Blob byteToBlob(byte[] obj)throws SQLException{
-    if(obj == null)
-        return null;
-    else{
-        return new SerialBlob(obj);
-    }
-}
-private byte[] blobToByte(Blob blob)throws SQLException{
-    if(blob == null)
-        return new byte[0];
-    else{
-        int blobLength = (int) blob.length();
-        return blob.getBytes(1, blobLength);
-    }
-    
 }
 }
 
