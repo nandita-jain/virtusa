@@ -13,9 +13,8 @@ public class LoginController {
 	@Autowired
 	private LoginService loginService;
 
-    @RequestMapping(value="/login", method = RequestMethod.POST, consumes = "application/json")	
-	public Boolean checkUser(@RequestBody LoginModel data)
-	{
+	@RequestMapping(value = "/login", method = RequestMethod.POST, consumes = "application/json")
+	public Boolean checkUser(@RequestBody LoginModel data) {
 		return loginService.checkUser(data);
 	}
 }
